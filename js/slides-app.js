@@ -37,9 +37,16 @@ var SlidesApp = (function($) {
         newFile();
     }
 
+    function getWindowTitle() {
+        if(editorSaved) {
+            return APP_NAME + " - " + fileName + ((filePath!=undefined) ? " ["+filePath+"]" : "");
+        } else {
+            return APP_NAME + " - " + fileName + "*" + ((filePath != undefined) ? " [" + filePath + "]" : "");
+        }
+    }
     function editorChanged() {
         editorSaved = false;
-        win.title = APP_NAME + " - " + fileName +"*" + ((filePath!=undefined) ? " ["+filePath+"]" : "");
+        win.title = getWindowTitle();
         update();
     }
 
@@ -48,7 +55,7 @@ var SlidesApp = (function($) {
     }
 
     function update() {
-        getEditFrame(editor.val(), editor[0].selectionStart,
+        getEditFrame(replaceRelativePath(editor.val()), editor[0].selectionStart,
             function(err, res) {
                 if(err == null) {
                     slides(res, function(err, res) {
@@ -59,6 +66,14 @@ var SlidesApp = (function($) {
                 }
             }
         );
+    }
+
+    function replaceRelativePath(input) {
+        if(filePath != null) {
+            return input.replace("./", path.dirname(filePath)+"/");
+        } else {
+            return input;
+        }
     }
 
     function getEditFrame(input, index, callback) {
@@ -96,8 +111,8 @@ var SlidesApp = (function($) {
 
     function getIFrameSrcdoc(body) {
         return "<!DOCTYPE html><html><head lang=\"en\"><meta charset=\"UTF-8\">" +
-            "<link rel=\"stylesheet\" href=\"./assets/css/slides.css\">" +
-            "<script type=\"text/javascript\" src=\"./assets/js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>" +
+            "<link rel=\"stylesheet\" href=\"./slides_assets/css/slides.css\">" +
+            "<script type=\"text/javascript\" src=\"./slides_assets/js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>" +
             "</head><body>"+body+"</body></html>";
     }
 
@@ -128,6 +143,14 @@ var SlidesApp = (function($) {
             }
         });
 
+        $("#btnPreview").click(function() {
+            slides(replaceRelativePath(editor.val()), function(err, res) {
+                if(err == null) {
+                    openPreviewWindow(res.html);
+                }
+            });
+        });
+
         fileOpenDialog = $("#fileOpenDialog").change(function() {
             openFile($(this).val());
             $(this).val("");
@@ -156,7 +179,7 @@ var SlidesApp = (function($) {
         filePath = null;
         fileName = DEF_FILE_NAME;
         editor.val("");
-        win.title = APP_NAME + " - " + fileName + ((filePath!=undefined) ? " ["+filePath+"]" : "");
+        win.title = getWindowTitle();
         fileOpenDialog.val("");
         fileSaveDialog.val("");
         preview.prop("srcdoc", "");
@@ -171,7 +194,7 @@ var SlidesApp = (function($) {
                         editorSaved = true;
                         filePath = file;
                         fileName = path.basename(file);
-                        win.title = APP_NAME + " - " + fileName + ((file!=null) ? " ["+file+"]" : "");
+                        win.title = getWindowTitle();
                     }
                 });
             } else {
@@ -187,9 +210,22 @@ var SlidesApp = (function($) {
                 editorSaved = true;
                 filePath = file;
                 fileName = path.basename(file);
-                win.title = APP_NAME + " - " + fileName + ((file!=null) ? " ["+file+"]" : "");
+                win.title = getWindowTitle();
             }
         })
+    }
+
+    function openPreviewWindow(content) {
+        var previewWin = gui.Window.open("preview", {
+            toolbar: true
+        });
+        previewWin.on('loaded', function(){
+            console.dir(gui)
+            previewWin.focus();
+            previewWin.window.document.open();
+            previewWin.window.document.write(content);
+            previewWin.window.document.close();
+        });
     }
 
     return {
