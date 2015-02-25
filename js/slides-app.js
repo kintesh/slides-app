@@ -13,6 +13,7 @@ var SlidesApp = (function($) {
 
     var gui = require("nw.gui"),
         win = gui.Window.get(),
+        menu = new gui.Menu({ type: "menubar" }),
         slides = require("slides"),
         path = require("path"),
         fs = require("fs");
@@ -22,6 +23,13 @@ var SlidesApp = (function($) {
     function init() {
         log("init");
         win.title = APP_NAME;
+        if (process.platform === "darwin") {
+            menu.createMacBuiltin(APP_NAME, {
+                hideEdit: false,
+                hideWindow: false
+            });
+        }
+        win.menu = menu;
         editorSaved = true;
         initMenu();
         editor = $("#editor");
