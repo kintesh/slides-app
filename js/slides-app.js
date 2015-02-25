@@ -9,13 +9,22 @@ var SlidesApp = (function($) {
     }
 
     var slides = require("slides");
-    var editor, preview;
+    var editor, preview, editorSaved;
 
     function init() {
         log("init");
 
         editor = $("#editor");
         preview = $("#preview");
+    }
+
+    function editorChanged() {
+        editorSaved = false;
+        update();
+    }
+
+    function editorClick() {
+        update();
     }
 
     function update() {
@@ -79,7 +88,8 @@ var SlidesApp = (function($) {
 
     return {
         init:init,
-        update:update
+        editorChanged:editorChanged,
+        editorClick:editorClick
     }
 
 })(jQuery);
