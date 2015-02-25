@@ -8,18 +8,30 @@ var SlidesApp = (function($) {
         console.dir(s);
     }
 
-    var slides = require("slides");
-    var editor, preview, editorSaved;
+    var APP_NAME = "Slides App",
+        DEF_FILE_NAME = "untitled";
+
+    var gui = require("nw.gui"),
+        win = gui.Window.get(),
+        slides = require("slides"),
+        path = require("path"),
+        fs = require("fs");
+    var editor, preview, editorSaved, filePath, fileName;
+    var fileOpenDialog, fileSaveDialog;
 
     function init() {
         log("init");
-
+        win.title = APP_NAME;
+        editorSaved = true;
+        initMenu();
         editor = $("#editor");
         preview = $("#preview");
+        newFile();
     }
 
     function editorChanged() {
         editorSaved = false;
+        win.title = APP_NAME + " - " + fileName +"*" + ((filePath!=undefined) ? " ["+filePath+"]" : "");
         update();
     }
 
@@ -28,8 +40,6 @@ var SlidesApp = (function($) {
     }
 
     function update() {
-        log("update");
-
         getEditFrame(editor.val(), editor[0].selectionStart,
             function(err, res) {
                 if(err == null) {
@@ -41,9 +51,7 @@ var SlidesApp = (function($) {
                 }
             }
         );
-
     }
-
 
     function getEditFrame(input, index, callback) {
         if(index > 0) {
@@ -85,6 +93,96 @@ var SlidesApp = (function($) {
             "</head><body>"+body+"</body></html>";
     }
 
+    function initMenu() {
+        $("#btnNew").click(function() {
+            newFile();
+        });
+
+        $("#btnOpen").click(function() {
+            if(editorSaved) {
+                fileOpenDialog.trigger("click");
+            } else {
+                if (confirm("Current file not saved.\nContinue without saving?")) {
+                    fileOpenDialog.trigger("click");
+                } else {
+                    $("#btnSave").trigger("click");
+                }
+            }
+        });
+
+        $("#btnSave").click(function() {
+            if(filePath != null) {
+                fileSaveDialog.prop("nwsaveas", filePath);
+                saveFile(filePath);
+            } else {
+                fileSaveDialog.prop("nwsaveas", fileName);
+                fileSaveDialog.trigger("click");
+            }
+        });
+
+        fileOpenDialog = $("#fileOpenDialog").change(function() {
+            openFile($(this).val());
+            $(this).val("");
+        });
+
+        fileSaveDialog = $("#fileSaveDialog").change(function() {
+            saveFile($(this).val());
+            $(this).val("");
+        });
+    }
+
+    function newFile() {
+        if(editorSaved) {
+            resetEditor();
+        } else {
+            if (confirm("Current file not saved.\nContinue without saving?")) {
+                resetEditor();
+            } else {
+                $("#btnSave").trigger("click");
+            }
+        }
+    }
+
+    function resetEditor() {
+        editorSaved = true;
+        filePath = null;
+        fileName = DEF_FILE_NAME;
+        editor.val("");
+        win.title = APP_NAME + " - " + fileName + ((filePath!=undefined) ? " ["+filePath+"]" : "");
+        fileOpenDialog.val("");
+        fileSaveDialog.val("");
+        update();
+    }
+
+    function openFile(file) {
+        fs.exists(file, function (res) {
+            if(res == true) {
+                fs.readFile(file, function(err, res) {
+                    if(err == null) {
+                        editor.val(res);
+                        editorSaved = true;
+                        filePath = file;
+                        fileName = path.basename(file);
+                        win.title = APP_NAME + " - " + fileName + ((file!=null) ? " ["+file+"]" : "");
+                    }
+                });
+            } else {
+                alert("File does not exist.");
+            }
+
+        })
+    }
+
+    function saveFile(file) {
+        fs.writeFile(file, editor.val(), "utf8", function(err, res) {
+            if(!err) {
+                editorSaved = true;
+                filePath = file;
+                fileName = path.basename(file);
+                win.title = APP_NAME + " - " + fileName + ((file!=null) ? " ["+file+"]" : "");
+            }
+        })
+    }
 
     return {
         init:init,
