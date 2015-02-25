@@ -1,0 +1,12 @@
+{
+  "name": "slides-app",
+  "version": "0.0.0",
+  "main": "index.html",
+  "window": {
+    "toolbar": false,
+    "width": 900,
+    "height": 600,
+    "min_width": 900,
+    "min_height": 600
+  }
+}

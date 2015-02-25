@@ -1,0 +1,112 @@
+
+@font-face {
+    font-family: 'Source Code Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Source Code Pro'), local('SourceCodePro-Regular'),
+    url('../fonts/SourceCodePro-Regular.woff2') format('woff2'),
+    url('../fonts/SourceCodePro-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'),
+    url('../fonts/Open_Sans-Regular.woff2') format('woff2'),
+    url('../fonts/Open_Sans-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Open Sans Bold'), local('OpenSans-Bold'),
+    url('../fonts/Open_Sans-Bold.woff2') format('woff2'),
+    url('../fonts/Open_Sans-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: local('Open Sans Italic'), local('OpenSans-Italic'),
+    url('../fonts/Open_Sans-Italic.woff2') format('woff2'),
+    url('../fonts/Open_Sans-Italic.woff') format('woff');
+}
+
+
+html, body {
+    height: 100%;
+    width: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    margin: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 11pt;
+}
+
+.top_menu {
+    position: relative;
+    height: 40px;
+}
+
+.btn {
+    background-color: #DDDDDD;
+    display: inline-block;
+    margin: 5px;
+    height: 28px;
+    min-width: 100px;
+    text-align: center;
+    line-height: 28px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #FFFFFF;
+}
+
+.main {
+    height: calc(100% - 40px);
+    width: 100%;
+    text-align: center;
+    background-color: #000;
+    display: inline-block;
+}
+
+.editor_container, .preview_container {
+    background-color: #f0f0f0;
+    display: inline-block;
+    height: calc(100% - 8px);
+    text-align: left;
+    margin: -2px;
+    padding: 5px;
+}
+
+.editor_container {
+    width: calc(60% - 10px);
+}
+
+.preview_container {
+    width: calc(40% - 10px);
+}
+
+.editor_container textarea {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1em;
+    border: none;
+    height: 100%;
+    width: 100%;
+    margin: -2px;
+}
+
+.preview_container iframe {
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+
