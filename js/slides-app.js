@@ -21,7 +21,6 @@ var SlidesApp = (function($) {
     var fileOpenDialog, fileSaveDialog;
 
     function init() {
-        log("init");
         win.title = APP_NAME;
         if (process.platform === "darwin") {
             menu.createMacBuiltin(APP_NAME, {
@@ -217,10 +216,9 @@ var SlidesApp = (function($) {
 
     function openPreviewWindow(content) {
         var previewWin = gui.Window.open("preview", {
-            toolbar: true
+            toolbar: false
         });
         previewWin.on('loaded', function(){
-            console.dir(gui)
             previewWin.focus();
             previewWin.window.document.open();
             previewWin.window.document.write(content);
