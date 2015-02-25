@@ -159,7 +159,7 @@ var SlidesApp = (function($) {
         win.title = APP_NAME + " - " + fileName + ((filePath!=undefined) ? " ["+filePath+"]" : "");
         fileOpenDialog.val("");
         fileSaveDialog.val("");
-        update();
+        preview.prop("srcdoc", "");
     }
 
     function openFile(file) {
