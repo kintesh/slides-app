@@ -53,10 +53,13 @@ html, body {
 .top_menu {
     position: relative;
     height: 40px;
+    background-color: #1FA67A;
 }
 
 .btn {
-    background-color: #DDDDDD;
+    background-color: #1FA67A;
+    color: #FFFFFF;
+    border-radius: 4px;
     display: inline-block;
     margin: 5px;
     height: 28px;
@@ -68,6 +71,7 @@ html, body {
 
 .btn:hover {
     background-color: #FFFFFF;
+    color: #000000;
 }
 
 .main {
