@@ -38,11 +38,12 @@ var SlidesApp = (function($) {
 
     function getWindowTitle() {
         if(editorSaved) {
-            return APP_NAME + " - " + fileName + ((filePath!=undefined) ? " ["+filePath+"]" : "");
+            return APP_NAME + " - " + fileName + ((filePath!=undefined) ? " [" + filePath + "]" : "");
         } else {
             return APP_NAME + " - " + fileName + "*" + ((filePath != undefined) ? " [" + filePath + "]" : "");
         }
     }
+
     function editorChanged() {
         editorSaved = false;
         win.title = getWindowTitle();
@@ -79,24 +80,24 @@ var SlidesApp = (function($) {
         if(index > 0) {
             var temp = "";
             // Look backwards
-            for(var i=index; i>0; i--) {
-                if(input.charAt(i) === "=" && (i-4)>0) {
-                    if(input.charAt(i-1) === "="
-                        && input.charAt(i-2) === "="
-                        && input.charAt(i-3) === "=") {
-                        temp+=input.slice(i-3, index);
+            for(var b=index; b>0; b--) {
+                if(input.charAt(b) === "=" && (b-4)>0) {
+                    if(input.charAt(b-1) === "="
+                        && input.charAt(b-2) === "="
+                        && input.charAt(b-3) === "=") {
+                        temp+=input.slice(b-3, index);
                         break;
                     }
                 }
             }
             if(temp !== "") {
                 // Look forwards
-                for (var i=index; i < input.length; i++) {
-                    if (input.charAt(i) === "=" && (i+4)<input.length) {
-                        if (input.charAt(i+1) === "="
-                            && input.charAt(i+2) === "="
-                            && input.charAt(i+3) === "=") {
-                            temp += input.slice(index, i + 4);
+                for (var f=index; f<input.length; f++) {
+                    if (input.charAt(f) === "=" && (f+4)<input.length) {
+                        if (input.charAt(f+1) === "="
+                            && input.charAt(f+2) === "="
+                            && input.charAt(f+3) === "=") {
+                            temp += input.slice(index, f + 4);
                             break;
                         }
                     }
@@ -199,19 +200,18 @@ var SlidesApp = (function($) {
             } else {
                 alert("File does not exist.");
             }
-
-        })
+        });
     }
 
     function saveFile(file) {
-        fs.writeFile(file, editor.val(), "utf8", function(err, res) {
+        fs.writeFile(file, editor.val(), "utf8", function(err) {
             if(!err) {
                 editorSaved = true;
                 filePath = file;
                 fileName = path.basename(file);
                 win.title = getWindowTitle();
             }
-        })
+        });
     }
 
     function openPreviewWindow(content) {
