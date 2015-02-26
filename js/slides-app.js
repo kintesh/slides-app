@@ -190,8 +190,8 @@ var SlidesApp = (function($) {
             if(res == true) {
                 fs.readFile(file, function(err, res) {
                     if(err == null) {
+                        resetEditor();
                         editor.val(res);
-                        editorSaved = true;
                         filePath = file;
                         fileName = path.basename(file);
                         win.title = getWindowTitle();
