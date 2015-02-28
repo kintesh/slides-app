@@ -16,11 +16,16 @@
     <div class="btn" id="btnSave"><i class="fa fa-floppy-o"></i> Save</div>
     <input type="file" id="fileSaveDialog" nwsaveas style="display: none;"/>
     <div class="btn" id="btnPreview"><i class="fa fa-play"></i> Preview</div>
+    <div class="btn"><i class="fa fa-external-link"></i> Export...
+        <div class="export-options">
+            <div class="btn" id="btnExportOnline"><i class="fa fa-globe"></i> for online use</div>
+            <div class="btn" id="btnExportOffline"><i class="fa fa-download"></i> for offline use</div>
+        </div>
+    </div>
 </div>
 <div class="main" >
     <div class="editor_container">
-        <textarea id="editor" oninput="SlidesApp.editorChanged()"
-                  onclick="SlidesApp.editorClick()">
+        <textarea id="editor">
         </textarea>
     </div>
     <div class="preview_container">

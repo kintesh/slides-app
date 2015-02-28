@@ -54,24 +54,43 @@ html, body {
     position: relative;
     height: 40px;
     background-color: #1FA67A;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.50);
 }
 
 .btn {
     background-color: #1FA67A;
     color: #FFFFFF;
-    border-radius: 4px;
     display: inline-block;
-    margin: 5px;
-    height: 28px;
+    height: 42px;
     min-width: 100px;
     text-align: center;
-    line-height: 28px;
+    line-height: 40px;
     cursor: pointer;
+    transition: all 0.2s;
+    margin: -2px;
 }
 
 .btn:hover {
-    background-color: #FFFFFF;
-    color: #000000;
+    background-color: #555555;
+}
+
+.export-options {
+    display: none;
+    min-width: 100px;
+    position: absolute;
+    margin-left: -110px;
+    padding-top: 42px;
+}
+
+.export-options .btn {
+    margin: -2px;
+    border-radius: 0;
+    padding: 5px 20px;
+    display: inherit;
+}
+
+.btn:hover > .export-options {
+    display: inline-block;
 }
 
 .main {
