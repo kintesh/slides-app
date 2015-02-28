@@ -125,6 +125,7 @@ html, body {
     height: 100%;
     width: 100%;
     margin: -2px;
+    outline: none !important;
 }
 
 .preview_container iframe {

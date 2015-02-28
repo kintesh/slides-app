@@ -25,7 +25,8 @@
 </div>
 <div class="main" >
     <div class="editor_container">
-        <textarea id="editor"></textarea>
+        <textarea id="editor" class="editor" oninput="SlidesApp.editorInput()"
+                  onclick="SlidesApp.editorClick()"></textarea>
     </div>
     <div class="preview_container">
         <iframe id="preview"></iframe>
