@@ -15,9 +15,10 @@ var SlidesApp = (function($) {
         menu = new gui.Menu({type:"menubar"}),
         path = require("path"),
         fs = require("fs"),
-        fsx = require("fs-extra");
-    var fileOpenDialog, fileSaveDialog, editor, editorState, preview,
-        currFilePath = null, currFileName;
+        fsx = require("fs-extra"),
+        slides = require("slides");
+    var fileOpenDialog, fileSaveDialog, editor, editorState, liveView,
+        currFilePath = null, currFileName, slidesModuleDir;
 
     function init() {
         win.title = APP_NAME;
@@ -28,9 +29,10 @@ var SlidesApp = (function($) {
             });
         }
         win.menu = menu;
+        slidesModuleDir = path.join(path.resolve(), "node_modules/slides");
         initMenu();
         editor = $("#editor");
-        preview = $("#preview");
+        liveView = $("#liveView");
         resetEditor();
     }
 
@@ -74,6 +76,11 @@ var SlidesApp = (function($) {
 
         $("#btnPreview").click(function() {
             console.dir("btnPreview")
+            slides(replaceRelativePath(editor.val()), function(err, res) {
+                if(err == null) {
+                    openPreviewWindow(res.offline);
+                }
+            });
         });
 
         $("#btnExportOnline").click(function() {
@@ -108,7 +115,7 @@ var SlidesApp = (function($) {
         editor.val("");
         fileOpenDialog.val("");
         fileSaveDialog.val("");
-        preview.prop("srcdoc", "");
+        liveView.prop("srcdoc", "");
         currFilePath = null;
         currFileName = DEFAULT_FILENAME;
         updateWindowTitle();
@@ -143,22 +150,91 @@ var SlidesApp = (function($) {
         });
     }
 
-
-
-
-
-
-
-
-
     function editorInput() {
         console.dir("editorInput")
         editorState = UNSAVED;
         updateWindowTitle();
+        updateLiveView();
     }
 
     function editorClick() {
         console.dir("editorInput")
+        updateLiveView();
+    }
+
+    function updateLiveView() {
+        getEditFrame(replaceRelativePath(editor.val()), editor[0].selectionStart,
+            function(err, res) {
+                if(err == null) {
+                    slides(res, function(err, res) {
+                        if(err == null) {
+                            liveView.prop("srcdoc", getLiveViewSrcdoc(res.html));
+                        }
+                    });
+                }
+            }
+        );
+    }
+
+    function getLiveViewSrcdoc(body) {
+        return "<!DOCTYPE html><html><head lang=\"en\"><meta charset=\"UTF-8\">" +
+            "<link rel=\"stylesheet\" href=\""+slidesModuleDir+"/assets/css/slides.css\">" +
+            "<script type=\"text/javascript\" src=\""+slidesModuleDir+"/assets/js/MathJax/MathJax.js?" +
+            "config=TeX-AMS-MML_HTMLorMML\"></script></head><body>"+body+"</body></html>";
+    }
+
+    function replaceRelativePath(input) {
+        if(currFilePath != null) {
+            return input.replace(/\.\//g, path.dirname(currFilePath)+"/");
+        } else {
+            return input;
+        }
+    }
+
+    function getEditFrame(input, index, callback) {
+        if(index > 0) {
+            var temp = "";
+            // Look backwards
+            for(var b=index; b>0; b--) {
+                if(input.charAt(b) === "=" && (b-4)>0) {
+                    if(input.charAt(b-1) === "="
+                        && input.charAt(b-2) === "="
+                        && input.charAt(b-3) === "=") {
+                        temp+=input.slice(b-3, index);
+                        break;
+                    }
+                }
+            }
+            if(temp !== "") {
+                // Look forwards
+                for (var f=index; f<input.length; f++) {
+                    if (input.charAt(f) === "=" && (f+4)<input.length) {
+                        if (input.charAt(f+1) === "="
+                            && input.charAt(f+2) === "="
+                            && input.charAt(f+3) === "=") {
+                            temp += input.slice(index, f + 4);
+                            break;
+                        }
+                    }
+                }
+            }
+            callback(null, temp);
+        } else {
+            callback("ERR", null);
+        }
+    }
+
+    function openPreviewWindow(content) {
+        content = content.replace(/\.\/slides_assets/g, slidesModuleDir+"/assets");
+        var previewWin = gui.Window.open("preview", {
+            toolbar: false
+        });
+        previewWin.on('loaded', function(){
+            previewWin.focus();
+            previewWin.window.document.open();
+            previewWin.window.document.write(content);
+            previewWin.window.document.close();
+        });
     }
 
     return {
