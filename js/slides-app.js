@@ -85,10 +85,20 @@ var SlidesApp = (function($) {
 
         $("#btnExportOnline").click(function() {
             console.dir("btnExportOnline")
+            if(editorState == SAVED && currFilePath != null) {
+                exportOnline();
+            } else {
+                alert("You must save current edit before exporting.")
+            }
         });
 
         $("#btnExportOffline").click(function() {
             console.dir("btnExportOffline")
+            if(editorState == SAVED && currFilePath != null) {
+                exportOffline();
+            } else {
+                alert("You must save current edit before exporting.")
+            }
         });
 
         fileOpenDialog = $("#fileOpenDialog").change(function() {
@@ -234,6 +244,48 @@ var SlidesApp = (function($) {
             previewWin.window.document.open();
             previewWin.window.document.write(content);
             previewWin.window.document.close();
+        });
+    }
+
+    function exportOnline() {
+        slides(editor.val(), function(err, res) {
+            if(err == null) {
+                var outFile = path.join(path.dirname(currFilePath), "slides_"+currFileName+".html");
+                fs.writeFile(outFile, res.online, "utf8", function(err) {
+                    if(!err) {
+                        alert("Slides exported for online use to:\n" + path.dirname(outFile));
+                    } else {
+                        alert("Error exporting slides.\n Please try again.");
+                    }
+                });
+            } else {
+                alert("Error marking slides.\n Check if preview works correctly.");
+            }
+        });
+    }
+
+    function exportOffline() {
+        slides(editor.val(), function(err, res) {
+            if(err == null) {
+                var srcAssets = path.join(slidesModuleDir, "assets");
+                var outAssets = path.join(path.dirname(currFilePath), "slides_assets");
+                fsx.copy(srcAssets, outAssets, function(err) {
+                    if(!err) {
+                        var outFile = path.join(path.dirname(currFilePath), "slides_"+currFileName+".html");
+                        fs.writeFile(outFile, res.offline, "utf8", function(err) {
+                            if(!err) {
+                                alert("Slides exported for online use to:\n" + path.dirname(outFile));
+                            } else {
+                                alert("Error exporting slides.\n Please try again.");
+                            }
+                        });
+                    } else {
+                        alert("Error copying slides assets.\n Please try again.");
+                    }
+                });
+            } else {
+                alert("Error marking slides.\n Check if preview works correctly.");
+            }
         });
     }
 
