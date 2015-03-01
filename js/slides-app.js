@@ -38,7 +38,6 @@ var SlidesApp = (function($) {
 
     function initMenu() {
         $("#btnNew").click(function() {
-            console.dir("btnNew")
             if(editorState === SAVED) {
                 resetEditor();
             } else {
@@ -51,7 +50,6 @@ var SlidesApp = (function($) {
         });
 
         $("#btnOpen").click(function() {
-            console.dir("btnOpen")
             if(editorState === SAVED) {
                 fileOpenDialog.trigger("click");
             } else {
@@ -64,7 +62,6 @@ var SlidesApp = (function($) {
         });
 
         $("#btnSave").click(function() {
-            console.dir("btnSave")
             if(currFilePath != null) {
                 fileSaveDialog.prop("nwsaveas", currFilePath);
                 saveFile(currFilePath);
@@ -75,7 +72,6 @@ var SlidesApp = (function($) {
         });
 
         $("#btnPreview").click(function() {
-            console.dir("btnPreview")
             slides(replaceRelativePath(editor.val()), function(err, res) {
                 if(err == null) {
                     openPreviewWindow(res.offline);
@@ -84,7 +80,6 @@ var SlidesApp = (function($) {
         });
 
         $("#btnExportOnline").click(function() {
-            console.dir("btnExportOnline")
             if(editorState == SAVED && currFilePath != null) {
                 exportOnline();
             } else {
@@ -93,7 +88,6 @@ var SlidesApp = (function($) {
         });
 
         $("#btnExportOffline").click(function() {
-            console.dir("btnExportOffline")
             if(editorState == SAVED && currFilePath != null) {
                 exportOffline();
             } else {
@@ -161,14 +155,12 @@ var SlidesApp = (function($) {
     }
 
     function editorInput() {
-        console.dir("editorInput")
         editorState = UNSAVED;
         updateWindowTitle();
         updateLiveView();
     }
 
     function editorClick() {
-        console.dir("editorInput")
         updateLiveView();
     }
 
