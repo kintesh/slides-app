@@ -2,6 +2,7 @@
   "name": "slides-app",
   "version": "0.0.0",
   "main": "index.html",
+  "private": true,
   "window": {
     "title": "Slides App",
     "toolbar": false,
