@@ -48,6 +48,8 @@ html, body {
     bottom: 0;
     font-family: 'Open Sans', sans-serif;
     font-size: 11pt;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .top_menu {
