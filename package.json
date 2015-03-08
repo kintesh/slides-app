@@ -9,7 +9,8 @@
     "width": 900,
     "height": 600,
     "min_width": 900,
-    "min_height": 600
+    "min_height": 600,
+    "icon": "img/slides.png"
   },
   "dependencies": {
     "fs-extra": "^0.16.3",
