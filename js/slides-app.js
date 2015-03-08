@@ -197,8 +197,8 @@ var SlidesApp = (function($) {
         if(index > 0) {
             var temp = "";
             // Look backwards
-            for(var b=index; b>0; b--) {
-                if(input.charAt(b) === "=" && (b-4)>0) {
+            for(var b=index-1; b>-1; b--) {
+                if(input.charAt(b) === "=" && (b-3)>-1) {
                     if(input.charAt(b-1) === "="
                         && input.charAt(b-2) === "="
                         && input.charAt(b-3) === "=") {
@@ -209,12 +209,12 @@ var SlidesApp = (function($) {
             }
             if(temp !== "") {
                 // Look forwards
-                for (var f=index; f<input.length; f++) {
-                    if (input.charAt(f) === "=" && (f+4)<input.length) {
+                for (var f=index; f<=input.length; f++) {
+                    if (input.charAt(f) === "=" && (f+4)<=input.length) {
                         if (input.charAt(f+1) === "="
                             && input.charAt(f+2) === "="
                             && input.charAt(f+3) === "=") {
-                            temp += input.slice(index, f + 4);
+                            temp += input.slice(index, f+4);
                             break;
                         }
                     }
