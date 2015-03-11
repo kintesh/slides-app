@@ -181,6 +181,8 @@ var SlidesApp = (function($) {
     function getLiveViewSrcdoc(body) {
         return "<!DOCTYPE html><html><head lang=\"en\"><meta charset=\"UTF-8\">" +
             "<link rel=\"stylesheet\" href=\""+slidesModuleDir+"/assets/css/slides.css\">" +
+            "<link rel=\"stylesheet\" href=\""+slidesModuleDir+"/assets/css/style.css\">" +
+            "<link rel=\"stylesheet\" href=\""+slidesModuleDir+"/assets/css/animations.css\">" +
             "<script type=\"text/javascript\" src=\""+slidesModuleDir+"/assets/js/MathJax/MathJax.js?" +
             "config=TeX-AMS-MML_HTMLorMML\"></script></head><body>"+body+"</body></html>";
     }
