@@ -6,11 +6,10 @@ node_js:
 before_script: npm install node-webkit-builder -g
 
 after_script:  nwbuild .
-
-deploy:
-  provider: releases
-  api_key: "74e45cb5d31347c52bc5bf969bcd68e803220d54"
-  file: "./build/*"
-  skip_cleanup: true
-  on:
-    tags: true
+  deploy:
+    provider: releases
+    api_key: "74e45cb5d31347c52bc5bf969bcd68e803220d54"
+    file: "./build/*"
+    skip_cleanup: true
+    on:
+      tags: true
