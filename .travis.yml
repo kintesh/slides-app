@@ -1,16 +1,3 @@
 language: node_js
 node_js:
   - "0.11"
-
-before_script: npm install node-webkit-builder -g
-script:  nwbuild .
-
-deploy:
-  provider: releases
-  api_key: "74e45cb5d31347c52bc5bf969bcd68e803220d54"
-  file:
-    - "/home/travis/build/kintesh/slides-app/build/slides-app/osx32/slides-app.app"
-    - "/home/travis/build/kintesh/slides-app/build/slides-app/osx64/slides-app.app"
-  skip_cleanup: true
-  on:
-    tags: true
