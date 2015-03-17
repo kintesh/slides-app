@@ -1,4 +1,4 @@
-# slides-app
+# slides-app [![Build Status](https://magnum.travis-ci.com/kintesh/slides-app.svg?token=DVy8k5QfBqWJZbznAXvF&branch=master)](https://magnum.travis-ci.com/kintesh/slides-app)
 slides app using NW.js
 
 
