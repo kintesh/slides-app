@@ -14,6 +14,6 @@
   },
   "dependencies": {
     "fs-extra": "^0.16.3",
-    "slides": "git+ssh://git@github.com:kintesh/slides.git"
+    "slides": "https://github.com/kintesh/slides/tarball/master"
   }
 }
