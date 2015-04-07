@@ -198,24 +198,28 @@ var SlidesApp = (function($) {
     function getEditFrame(input, index, callback) {
         if(index > 0) {
             var temp = "";
+            var foundStart = false;
             for(var b=index; b>=0; b--) {
                 if (input.slice(b-4, b) === "====") {
                     temp = input.slice(b-4, index);
+                    foundStart = true;
                     break;
                 }
             }
-            var foundEnd = false;
-            for(var f=index; f<=input.length; f++) {
-                if(input.charAt(f) === "=") {
-                    if(/\s*={4}\s*/.exec(input.slice(f, f+4)) != null) {
-                        temp += input.slice(index, f+4);
-                        foundEnd = true;
-                        break;
+            if(foundStart) {
+                var foundEnd = false;
+                for (var f = index; f <= input.length; f++) {
+                    if (input.charAt(f) === "=") {
+                        if (/\s*={4}\s*/.exec(input.slice(f, f + 4)) != null) {
+                            temp += input.slice(index, f + 4);
+                            foundEnd = true;
+                            break;
+                        }
                     }
                 }
+                if(!foundEnd)
+                    temp = "";
             }
-            if(!foundEnd)
-                temp = "";
             callback(null, temp);
         } else {
             callback("ERR", null);
