@@ -225,7 +225,9 @@ var SlidesApp = (function($) {
     function openPreviewWindow(content) {
         content = content.replace(/\.\/slides_assets/g, slidesModuleDir+"/assets");
         var previewWin = gui.Window.open("preview", {
-            toolbar: false
+            toolbar: false,
+            "width": 900,
+            "height": 600
         });
         previewWin.on('loaded', function(){
             previewWin.focus();
