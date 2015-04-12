@@ -15,5 +15,24 @@
   "dependencies": {
     "fs-extra": "^0.16.3",
     "slides": "https://github.com/kintesh/slides/tarball/master"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kintesh/slides-app.git"
+  },
+  "keywords": [
+    "slide",
+    "slides",
+    "presentation",
+    "web",
+    "html",
+    "html5",
+    "mathjax"
+  ],
+  "author": "Kintesh <i.am@kinte.sh> (http://kinte.sh/)",
+  "license": "Apache License, Version 2.0",
+  "bugs": {
+    "url": "https://github.com/kintesh/slides-app/issues"
+  },
+  "homepage": "https://github.com/kintesh/slides-app"
 }
