@@ -200,7 +200,7 @@ var SlidesApp = (function($) {
             var temp = "";
             var foundStart = false;
             for(var b=index; b>=0; b--) {
-                if (input.slice(b-4, b) === "====") {
+                if (input.slice(b-4, b) === "====" && input.charAt(b-5) !== "\\") {
                     temp = input.slice(b-4, index);
                     foundStart = true;
                     break;
@@ -210,7 +210,7 @@ var SlidesApp = (function($) {
                 var foundEnd = false;
                 for (var f = index; f <= input.length; f++) {
                     if (input.charAt(f) === "=") {
-                        if (/\s*={4}\s*/.exec(input.slice(f, f + 4)) != null) {
+                        if (/\s*={4}\s*/.exec(input.slice(f, f + 4)) != null && input.charAt(f-1) !== "\\") {
                             temp += input.slice(index, f + 4);
                             foundEnd = true;
                             break;
