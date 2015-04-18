@@ -34,6 +34,12 @@ var SlidesApp = (function($) {
         editor = $("#editor");
         liveView = $("#liveView");
         resetEditor();
+
+        editor.bind("blur", function() {
+            setTimeout(function() {
+                editor.focus();
+            }, 0);
+        });
     }
 
     function initMenu() {
