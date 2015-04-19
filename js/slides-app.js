@@ -237,7 +237,8 @@ var SlidesApp = (function($) {
         var previewWin = gui.Window.open("preview", {
             toolbar: false,
             "width": 900,
-            "height": 600
+            "height": 600,
+            "icon": "./img/slides.png"
         });
         previewWin.on('loaded', function(){
             previewWin.focus();
