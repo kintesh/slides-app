@@ -3,6 +3,22 @@ slides app using NW.js
 
 
 
+# Download
+Prebuilt packages are published on [Github Releases over here.](https://github.com/kintesh/slides-app/releases)
+
+
+
+# Build your own package
+
+    $ git clone https://github.com/kintesh/slides-app.git
+    $ cd slides-app/
+    $ npm update
+    $ ./node_modules/.bin/gulp
+
+Once finished, check the ` build ` directory.
+
+
+
 # Using slides-app
 Use the top menu to create, open, save, preview or export slides. When editing, live preview will be updated to visualize the content.
 
