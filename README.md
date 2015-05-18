@@ -6,6 +6,11 @@ This module provides GUI for making slides. A CLI tool can be found at
 
 
 
+# Demo
+Check out sample slides produced by this app [over here.](https://slides.kinte.sh/sample.html)
+
+
+
 # Download
 Prebuilt packages are published on [Github Releases over here.](https://github.com/kintesh/slides-app/releases)
 
